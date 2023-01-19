@@ -1,0 +1,3 @@
+C:/Users/HUAWEY_mb14/Documents/GitHub/tag-sfml/build/CMakeFiles/Tag.dir
+C:/Users/HUAWEY_mb14/Documents/GitHub/tag-sfml/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/HUAWEY_mb14/Documents/GitHub/tag-sfml/build/CMakeFiles/ZERO_CHECK.dir
