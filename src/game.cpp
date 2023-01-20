@@ -56,22 +56,6 @@ void Game::tag_game(Mouse mouse_click)
             else if (logic.at(x_mouse + 1).at(y_mouse) == 16)   { dx = 1; dy = 0; }
 
             m_tag.swap_tiles(x_mouse, y_mouse, dx, dy);
-
-            // Ставим пустой блок на место выбранного пользователем блока
-            sprite[16].move(-dx * 144, -dy * 144);
-            // Скорость анимации
-            float speed = 6;
-            for (int i = 0; i < 144; i += speed)
-            {
-                // Двигаем выбранный блок
-                sprite.at([temp]).move(speed*dx, speed*dy);
-                // Отрисовываем пустой блок
-                main_window.draw(sprite[16]);
-                // Отрисовываем выбранный блок
-                main_window.draw(sprite.at([temp]));
-                // Отображаем всю композицию в окне
-                main_window.display();
-            }
         }
     }
 }
