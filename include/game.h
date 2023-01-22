@@ -28,6 +28,7 @@ protected:
 	std::stringstream print_time;
 
 private:
+	void all_time();
 	void event_processing();
 	void tag_game(Mouse mouse_click);
 	void draw_window();

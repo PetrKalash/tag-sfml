@@ -24,21 +24,25 @@ void Game::start_game()
 {
     while (main_window.isOpen()) 
     {
-        print_time.str("");
-        seconds = clock.getElapsedTime().asSeconds();
-
-        minuts = seconds / 60;
-        seconds = seconds - minuts * 60;
-
-        if (minuts < 10) print_time << "0" << minuts;
-        else print_time << minuts;
-
-        if (seconds < 10) print_time << ":" << "0" << seconds;
-        else print_time << ":" << seconds;
-
+        all_time();
         event_processing();
         draw_window();
     }
+}
+
+void Game::all_time()
+{
+    print_time.str("");
+    seconds = clock.getElapsedTime().asSeconds();
+
+    minuts = seconds / 60;
+    seconds = seconds - minuts * 60;
+
+    if (minuts < 10) print_time << "0" << minuts;
+    else print_time << minuts;
+
+    if (seconds < 10) print_time << ":" << "0" << seconds;
+    else print_time << ":" << seconds;
 }
 
 void Game::event_processing()
