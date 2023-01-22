@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <array>
-#include <iostream>
+#include <random>
 
 class Tag
 {
@@ -16,7 +16,8 @@ private:
 public:
 	Tag();
 
-	void swap_tiles(int32_t &y_mouse, int32_t &x_mouse, int32_t &dx, int32_t &dy);
+	int32_t get_random_number();
+	void swap_tiles(int32_t &x_mouse, int32_t &y_mouse, int32_t &dx, int32_t &dy);
 
 	std::array<sf::Sprite, 17> get_sprite_tiles() const;
 	std::array<std::array<int32_t, 6>, 6> get_logic_tiles() const;

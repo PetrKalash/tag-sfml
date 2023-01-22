@@ -1,17 +1,45 @@
 #include "game.h"
+#include <iostream>
+
+float Game::m_timer = 0;
+float Game::m_minuts = 0;
 
 Game::Game()
 {
-    sf::ContextSettings settings; settings.antialiasingLevel = 8;
-    main_window.create(sf::VideoMode(572, 572), "Tag", sf::Style::Default, settings);
-    // «адаем максимальную частоту кадров (иначе эффект анимации может быть незаметен)
+    settings.antialiasingLevel = 8;
+    // —оздание главного окна
+    main_window.create(sf::VideoMode(885, 572), "Tag", sf::Style::Default, settings);
+    // ћаксимальна€ частота кадров
     main_window.setFramerateLimit(60);
+    // «агрузка шрифта дл€ времени
+    font_time.loadFromFile("resources\\fonts\\Comic-Sans MS.ttf");
 }
 
 void Game::start_game()
 {
     while (main_window.isOpen()) 
     {
+        print_time.str("");
+        seconds = clock.getElapsedTime().asSeconds();
+
+        minuts = seconds / 60;
+        seconds = seconds - minuts * 60;
+
+        if (minuts < 10) print_time << "0" << minuts;
+        else print_time << minuts;
+
+        if (seconds < 10) print_time << ":" << "0" << seconds;
+        else print_time << ":" << seconds;
+
+        sf::Text text_time(std::to_string(m_timer), font_time, 40);
+        text_time.setFillColor(sf::Color::Black);
+        text_time.setPosition(768, 77);
+
+
+        text_time.setString(print_time.str());
+        main_window.draw(text_time);
+        main_window.display();
+
         event_processing();
         draw_window();
     }
@@ -37,8 +65,8 @@ void Game::tag_game(Mouse mouse_click)
     std::array<std::array<int32_t, 6>, 6> logic = m_tag.get_logic_tiles();
 
     sf::Vector2i pos = sf::Mouse::getPosition(main_window);
-    int32_t x_mouse = pos.x / 144 + 1;
-    int32_t y_mouse = pos.y / 144 + 1;
+    int32_t x_mouse = pos.x / 143 + 1;
+    int32_t y_mouse = pos.y / 143 + 1;
 
     int32_t dx{}, dy{};
 
@@ -46,10 +74,7 @@ void Game::tag_game(Mouse mouse_click)
     {
         case Mouse::LEFT_CLICK:
         {
-            std::cout << x_mouse << "\t" << y_mouse << std::endl;
-            std::cout << logic.at(y_mouse).at(x_mouse) << std::endl;
-            // »щем €чейку с пустым местом вокруг выбранной €чейки
-            
+            // »щем €чейку с пустым местом вокруг выбранной €чейки      
             if (logic.at(x_mouse - 1).at(y_mouse) == 16)        { dx = -1; dy = 0; }
             else if (logic.at(x_mouse).at(y_mouse - 1) == 16)   { dx = 0; dy = -1; }
             else if (logic.at(x_mouse).at(y_mouse + 1) == 16)   { dx = 0; dy = 1; }
@@ -67,11 +92,12 @@ void Game::draw_window()
 
     main_window.clear(sf::Color::White);
 
-    for (size_t x{0}; x < logic.size() - 2; ++x)
+    for (size_t x{0}; x < logic.size() - 2; ++x) {
         for (size_t y{0}; y < logic.size() - 2; ++y) {
             sprite.at(logic.at(x + 1).at(y + 1)).setPosition(x * 144, y * 144);
             main_window.draw(sprite.at(logic.at(x + 1).at(y + 1)));
         }
+    }
 
     main_window.display();
 }
