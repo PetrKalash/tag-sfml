@@ -1,18 +1,23 @@
 #include "game.h"
-#include <iostream>
 
 float Game::m_timer = 0;
 float Game::m_minuts = 0;
 
 Game::Game()
 {
+    // —глаживание текстур
     settings.antialiasingLevel = 8;
     // —оздание главного окна
-    main_window.create(sf::VideoMode(885, 572), "Tag", sf::Style::Default, settings);
+    main_window.create(sf::VideoMode(649, 667), "Tag", sf::Style::Default, settings);
     // ћаксимальна€ частота кадров
     main_window.setFramerateLimit(60);
-    // «агрузка шрифта дл€ времени
+
+    // Ўрифт Comic Sans MS
     font_time.loadFromFile("resources\\fonts\\Comic-Sans MS.ttf");
+
+    // «адний фон игры
+    texture_background.loadFromFile("resources\\img\\background.jpg");
+    sprite_backround.setTexture(texture_background);
 }
 
 void Game::start_game()
@@ -30,15 +35,6 @@ void Game::start_game()
 
         if (seconds < 10) print_time << ":" << "0" << seconds;
         else print_time << ":" << seconds;
-
-        sf::Text text_time(std::to_string(m_timer), font_time, 40);
-        text_time.setFillColor(sf::Color::Black);
-        text_time.setPosition(768, 77);
-
-
-        text_time.setString(print_time.str());
-        main_window.draw(text_time);
-        main_window.display();
 
         event_processing();
         draw_window();
@@ -65,8 +61,9 @@ void Game::tag_game(Mouse mouse_click)
     std::array<std::array<int32_t, 6>, 6> logic = m_tag.get_logic_tiles();
 
     sf::Vector2i pos = sf::Mouse::getPosition(main_window);
-    int32_t x_mouse = pos.x / 143 + 1;
-    int32_t y_mouse = pos.y / 143 + 1;
+
+    int32_t x_mouse = (pos.x - 35) / 144 + 1;
+    int32_t y_mouse = (pos.y - 52) / 144 + 1;
 
     int32_t dx{}, dy{};
 
@@ -74,13 +71,16 @@ void Game::tag_game(Mouse mouse_click)
     {
         case Mouse::LEFT_CLICK:
         {
-            // »щем €чейку с пустым местом вокруг выбранной €чейки      
-            if (logic.at(x_mouse - 1).at(y_mouse) == 16)        { dx = -1; dy = 0; }
-            else if (logic.at(x_mouse).at(y_mouse - 1) == 16)   { dx = 0; dy = -1; }
-            else if (logic.at(x_mouse).at(y_mouse + 1) == 16)   { dx = 0; dy = 1; }
-            else if (logic.at(x_mouse + 1).at(y_mouse) == 16)   { dx = 1; dy = 0; }
+            if (x_mouse < 5 && y_mouse < 5 && pos.x > 35 && pos.y > 52)
+            {
+                // »щем €чейку с пустым местом вокруг выбранной €чейки      
+                if (logic.at(x_mouse - 1).at(y_mouse) == 16) { dx = -1; dy = 0; }
+                else if (logic.at(x_mouse).at(y_mouse - 1) == 16) { dx = 0; dy = -1; }
+                else if (logic.at(x_mouse).at(y_mouse + 1) == 16) { dx = 0; dy = 1; }
+                else if (logic.at(x_mouse + 1).at(y_mouse) == 16) { dx = 1; dy = 0; }
 
-            m_tag.swap_tiles(x_mouse, y_mouse, dx, dy);
+                m_tag.swap_tiles(x_mouse, y_mouse, dx, dy);
+            }
         }
     }
 }
@@ -91,10 +91,19 @@ void Game::draw_window()
     std::array<std::array<int32_t, 6>, 6> logic = m_tag.get_logic_tiles();
 
     main_window.clear(sf::Color::White);
+    main_window.draw(sprite_backround);
+
+    sf::Text text_time(std::to_string(m_timer), font_time, 30);
+    text_time.setFillColor(sf::Color::Black);
+    text_time.setPosition(292, 9);
+
+    text_time.setString(print_time.str());
+    main_window.draw(text_time);
 
     for (size_t x{0}; x < logic.size() - 2; ++x) {
         for (size_t y{0}; y < logic.size() - 2; ++y) {
             sprite.at(logic.at(x + 1).at(y + 1)).setPosition(x * 144, y * 144);
+            sprite.at(logic.at(x + 1).at(y + 1)).move(35, 52);
             main_window.draw(sprite.at(logic.at(x + 1).at(y + 1)));
         }
     }

@@ -7,7 +7,6 @@ class Tag
 {
 protected:
 	sf::Texture texture_tag;
-	sf::Sprite sprite_tag;
 
 private:
 	std::array<std::array<int32_t, 6>, 6> m_logic_tiles;
