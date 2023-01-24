@@ -28,18 +28,24 @@ protected:
 	std::stringstream print_time;
 
 private:
+	// Общее время игры
 	void all_time();
+	// Обработка событий
 	void event_processing();
+	// Изменение программы
 	void tag_game(Mouse mouse_click);
+	// Отрисовка окна
 	void draw_window();
 
+	// Измерение времени в игре
 	static float m_timer;
 	static float m_minuts;
 
+	// Экземпляр пятнашек
 	Tag m_tag;
 
 public:
 	Game();
-
+	// Начало игры
 	void start_game();
 };

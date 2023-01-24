@@ -10,9 +10,9 @@ Game::Game()
     // —оздание главного окна
     main_window.create(sf::VideoMode(649, 667), "Tag", sf::Style::Default, settings);
     // ћаксимальна€ частота кадров
-    main_window.setFramerateLimit(60);
+    main_window.setFramerateLimit(200);
 
-    // Ўрифт Comic Sans MS
+    // Ўрифт времени
     font_time.loadFromFile("resources\\fonts\\Comic-Sans MS.ttf");
 
     // «адний фон игры
@@ -75,15 +75,33 @@ void Game::tag_game(Mouse mouse_click)
     {
         case Mouse::LEFT_CLICK:
         {
-            if (x_mouse < 5 && y_mouse < 5 && pos.x > 35 && pos.y > 52)
-            {
-                // »щем €чейку с пустым местом вокруг выбранной €чейки      
-                if (logic.at(x_mouse - 1).at(y_mouse) == 16) { dx = -1; dy = 0; }
-                else if (logic.at(x_mouse).at(y_mouse - 1) == 16) { dx = 0; dy = -1; }
-                else if (logic.at(x_mouse).at(y_mouse + 1) == 16) { dx = 0; dy = 1; }
-                else if (logic.at(x_mouse + 1).at(y_mouse) == 16) { dx = 1; dy = 0; }
+            // ѕроверка на выход за границы игрового пол€
+            if (x_mouse > 5 || y_mouse > 5 || pos.x < 35 || pos.y < 52) break;
 
-                m_tag.swap_tiles(x_mouse, y_mouse, dx, dy);
+            // »щем €чейку с пустым местом вокруг выбранной €чейки      
+            if (logic.at(x_mouse - 1).at(y_mouse) == 16)        { dx = -1; dy = 0; }
+            else if (logic.at(x_mouse).at(y_mouse - 1) == 16)   { dx = 0; dy = -1; }
+            else if (logic.at(x_mouse).at(y_mouse + 1) == 16)   { dx = 0; dy = 1;  }
+            else if (logic.at(x_mouse + 1).at(y_mouse) == 16)   { dx = 1; dy = 0;  }
+
+            // ћен€ем €чейки местами
+            m_tag.swap_tiles(x_mouse, y_mouse, dx, dy);
+
+            // ”станавливаем пустой блок внутри выбранного (выбранный блок находитс€ поверх пустого)
+            sprite.at(16).move(-dx * 144, -dy * 144);
+
+            // —корость анимации
+            int32_t speed{4};
+
+            for(int32_t i{}; i < 144; i += speed) {
+                // ѕередвигаем выбранный блок
+                sprite.at(logic.at(x_mouse).at(y_mouse)).move(speed * dx, speed * dy);
+                // ќтрисовываем пустой блок
+                main_window.draw(sprite.at(16));
+                // ќтрисовываем выбранный блок
+                main_window.draw(sprite.at(logic.at(x_mouse).at(y_mouse)));
+                // ќтрисовка всего окна
+                main_window.display();
             }
         }
     }
@@ -91,9 +109,6 @@ void Game::tag_game(Mouse mouse_click)
 
 void Game::draw_window()
 {
-    std::array<sf::Sprite, 17> sprite = m_tag.get_sprite_tiles();
-    std::array<std::array<int32_t, 6>, 6> logic = m_tag.get_logic_tiles();
-
     main_window.clear(sf::Color::White);
     main_window.draw(sprite_backround);
 
@@ -104,13 +119,7 @@ void Game::draw_window()
     text_time.setString(print_time.str());
     main_window.draw(text_time);
 
-    for (size_t x{0}; x < logic.size() - 2; ++x) {
-        for (size_t y{0}; y < logic.size() - 2; ++y) {
-            sprite.at(logic.at(x + 1).at(y + 1)).setPosition(x * 144, y * 144);
-            sprite.at(logic.at(x + 1).at(y + 1)).move(35, 52);
-            main_window.draw(sprite.at(logic.at(x + 1).at(y + 1)));
-        }
-    }
+    m_tag.new_set_position(main_window);
 
     main_window.display();
 }

@@ -34,6 +34,17 @@ void Tag::swap_tiles(int32_t &x_mouse, int32_t &y_mouse, int32_t &dx, int32_t &d
 	std::swap(m_logic_tiles.at(x_mouse).at(y_mouse), m_logic_tiles.at(x_mouse + dx).at(y_mouse + dy));
 }
 
+void Tag::new_set_position(sf::RenderWindow &main_window)
+{
+	for (size_t x{0}; x < m_logic_tiles.size() - 2; ++x) {
+		for (size_t y {0}; y < m_logic_tiles.size() - 2; ++y) {
+			m_sprite_tiles.at(m_logic_tiles.at(x + 1).at(y + 1)).setPosition(x * 144, y * 144);
+			m_sprite_tiles.at(m_logic_tiles.at(x + 1).at(y + 1)).move(35, 52);
+			main_window.draw(m_sprite_tiles.at(m_logic_tiles.at(x + 1).at(y + 1)));
+		}
+	}
+}
+
 std::array<sf::Sprite, 17> Tag::get_sprite_tiles() const
 {
 	return m_sprite_tiles;
