@@ -5,17 +5,17 @@ float Game::m_minuts = 0;
 
 Game::Game()
 {
-    // —глаживание текстур
+    // Сглаживание текстур
     settings.antialiasingLevel = 8;
-    // —оздание главного окна
+    // Создание главного окна
     main_window.create(sf::VideoMode(649, 667), "Tag", sf::Style::Default, settings);
-    // ћаксимальна¤ частота кадров
+    // Максимальная частота кадров
     main_window.setFramerateLimit(200);
 
-    // Ўрифт времени
+    // Шрифт времени
     font_time.loadFromFile("resources\\fonts\\Comic-Sans MS.ttf");
 
-    // «адний фон игры
+    // Задний фон игры
     texture_background.loadFromFile("resources\\img\\background.jpg");
     sprite_backround.setTexture(texture_background);
 }
@@ -75,32 +75,32 @@ void Game::tag_game(Mouse mouse_click)
     {
         case Mouse::LEFT_CLICK:
         {
-            // ѕроверка на выход за границы игрового пол¤
+            // Проверка на выход за границы игрового поля
             if (x_mouse > 5 || y_mouse > 5 || pos.x < 35 || pos.y < 52) break;
 
-            // »щем ¤чейку с пустым местом вокруг выбранной ¤чейки      
+            // Ищем ячейку с пустым местом вокруг выбранной ячейки      
             if (logic.at(x_mouse - 1).at(y_mouse) == 16)        { dx = -1; dy = 0; }
             else if (logic.at(x_mouse).at(y_mouse - 1) == 16)   { dx = 0; dy = -1; }
             else if (logic.at(x_mouse).at(y_mouse + 1) == 16)   { dx = 0; dy = 1;  }
             else if (logic.at(x_mouse + 1).at(y_mouse) == 16)   { dx = 1; dy = 0;  }
 
-            // ћен¤ем ¤чейки местами
+            // Меняем ячейки местами
             m_tag.swap_tiles(x_mouse, y_mouse, dx, dy);
 
-            // ”станавливаем пустой блок внутри выбранного (выбранный блок находитс¤ поверх пустого)
+            // Устанавливаем пустой блок внутри выбранного (выбранный блок находитс¤ поверх пустого)
             sprite.at(16).move(-dx * 144, -dy * 144);
 
-            // —корость анимации
+            // Скорость анимации
             int32_t speed{4};
 
             for(int32_t i{}; i < 144; i += speed) {
-                // ѕередвигаем выбранный блок
+                // Передвигаем выбранный блок
                 sprite.at(logic.at(x_mouse).at(y_mouse)).move(speed * dx, speed * dy);
-                // ќтрисовываем пустой блок
+                // Отрисовываем пустой блок
                 main_window.draw(sprite.at(16));
-                // ќтрисовываем выбранный блок
+                // Отрисовываем выбранный блок
                 main_window.draw(sprite.at(logic.at(x_mouse).at(y_mouse)));
-                // ќтрисовка всего окна
+                // Отрисовка всего окна
                 main_window.display();
             }
         }
