@@ -76,7 +76,7 @@ void Game::tag_game(Mouse mouse_click)
         case Mouse::LEFT_CLICK:
         {
             // Проверка на выход за границы игрового поля
-            if (x_mouse > 5 || y_mouse > 5 || pos.x < 35 || pos.y < 52) break;
+            if (x_mouse >= 5 || y_mouse >= 5 || pos.x <= 35 || pos.y <= 52) break;
 
             // Ищем ячейку с пустым местом вокруг выбранной ячейки      
             if (logic.at(x_mouse - 1).at(y_mouse) == 16)        { dx = -1; dy = 0; }
