@@ -1,21 +1,21 @@
-#include "game.h"
+ï»¿#include "game.h"
 
 float Game::m_timer = 0;
 float Game::m_minuts = 0;
 
 Game::Game()
 {
-    // Ñãëàæèâàíèå òåêñòóð
+    // â€”Ð³Ð»Ð°Ð¶Ð¸Ð²Ð°Ð½Ð¸Ðµ Ñ‚ÐµÐºÑÑ‚ÑƒÑ€
     settings.antialiasingLevel = 8;
-    // Ñîçäàíèå ãëàâíîãî îêíà
+    // â€”Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð³Ð»Ð°Ð²Ð½Ð¾Ð³Ð¾ Ð¾ÐºÐ½Ð°
     main_window.create(sf::VideoMode(649, 667), "Tag", sf::Style::Default, settings);
-    // Ìàêñèìàëüíàÿ ÷àñòîòà êàäðîâ
+    // Ñ›Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð°Â¤ Ñ‡Ð°ÑÑ‚Ð¾Ñ‚Ð° ÐºÐ°Ð´Ñ€Ð¾Ð²
     main_window.setFramerateLimit(200);
 
-    // Øðèôò âðåìåíè
+    // ÐŽÑ€Ð¸Ñ„Ñ‚ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸
     font_time.loadFromFile("resources\\fonts\\Comic-Sans MS.ttf");
 
-    // Çàäíèé ôîí èãðû
+    // Â«Ð°Ð´Ð½Ð¸Ð¹ Ñ„Ð¾Ð½ Ð¸Ð³Ñ€Ñ‹
     texture_background.loadFromFile("resources\\img\\background.jpg");
     sprite_backround.setTexture(texture_background);
 }
@@ -75,32 +75,32 @@ void Game::tag_game(Mouse mouse_click)
     {
         case Mouse::LEFT_CLICK:
         {
-            // Ïðîâåðêà íà âûõîä çà ãðàíèöû èãðîâîãî ïîëÿ
+            // Ñ•Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð° Ð²Ñ‹Ñ…Ð¾Ð´ Ð·Ð° Ð³Ñ€Ð°Ð½Ð¸Ñ†Ñ‹ Ð¸Ð³Ñ€Ð¾Ð²Ð¾Ð³Ð¾ Ð¿Ð¾Ð»Â¤
             if (x_mouse > 5 || y_mouse > 5 || pos.x < 35 || pos.y < 52) break;
 
-            // Èùåì ÿ÷åéêó ñ ïóñòûì ìåñòîì âîêðóã âûáðàííîé ÿ÷åéêè      
+            // Â»Ñ‰ÐµÐ¼ Â¤Ñ‡ÐµÐ¹ÐºÑƒ Ñ Ð¿ÑƒÑÑ‚Ñ‹Ð¼ Ð¼ÐµÑÑ‚Ð¾Ð¼ Ð²Ð¾ÐºÑ€ÑƒÐ³ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ð¾Ð¹ Â¤Ñ‡ÐµÐ¹ÐºÐ¸      
             if (logic.at(x_mouse - 1).at(y_mouse) == 16)        { dx = -1; dy = 0; }
             else if (logic.at(x_mouse).at(y_mouse - 1) == 16)   { dx = 0; dy = -1; }
             else if (logic.at(x_mouse).at(y_mouse + 1) == 16)   { dx = 0; dy = 1;  }
             else if (logic.at(x_mouse + 1).at(y_mouse) == 16)   { dx = 1; dy = 0;  }
 
-            // Ìåíÿåì ÿ÷åéêè ìåñòàìè
+            // Ñ›ÐµÐ½Â¤ÐµÐ¼ Â¤Ñ‡ÐµÐ¹ÐºÐ¸ Ð¼ÐµÑÑ‚Ð°Ð¼Ð¸
             m_tag.swap_tiles(x_mouse, y_mouse, dx, dy);
 
-            // Óñòàíàâëèâàåì ïóñòîé áëîê âíóòðè âûáðàííîãî (âûáðàííûé áëîê íàõîäèòñÿ ïîâåðõ ïóñòîãî)
+            // â€ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð¿ÑƒÑÑ‚Ð¾Ð¹ Ð±Ð»Ð¾Ðº Ð²Ð½ÑƒÑ‚Ñ€Ð¸ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ð¾Ð³Ð¾ (Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ð¹ Ð±Ð»Ð¾Ðº Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚ÑÂ¤ Ð¿Ð¾Ð²ÐµÑ€Ñ… Ð¿ÑƒÑÑ‚Ð¾Ð³Ð¾)
             sprite.at(16).move(-dx * 144, -dy * 144);
 
-            // Ñêîðîñòü àíèìàöèè
+            // â€”ÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸Ð¸
             int32_t speed{4};
 
             for(int32_t i{}; i < 144; i += speed) {
-                // Ïåðåäâèãàåì âûáðàííûé áëîê
+                // Ñ•ÐµÑ€ÐµÐ´Ð²Ð¸Ð³Ð°ÐµÐ¼ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ð¹ Ð±Ð»Ð¾Ðº
                 sprite.at(logic.at(x_mouse).at(y_mouse)).move(speed * dx, speed * dy);
-                // Îòðèñîâûâàåì ïóñòîé áëîê
+                // ÑœÑ‚Ñ€Ð¸ÑÐ¾Ð²Ñ‹Ð²Ð°ÐµÐ¼ Ð¿ÑƒÑÑ‚Ð¾Ð¹ Ð±Ð»Ð¾Ðº
                 main_window.draw(sprite.at(16));
-                // Îòðèñîâûâàåì âûáðàííûé áëîê
+                // ÑœÑ‚Ñ€Ð¸ÑÐ¾Ð²Ñ‹Ð²Ð°ÐµÐ¼ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ð¹ Ð±Ð»Ð¾Ðº
                 main_window.draw(sprite.at(logic.at(x_mouse).at(y_mouse)));
-                // Îòðèñîâêà âñåãî îêíà
+                // ÑœÑ‚Ñ€Ð¸ÑÐ¾Ð²ÐºÐ° Ð²ÑÐµÐ³Ð¾ Ð¾ÐºÐ½Ð°
                 main_window.display();
             }
         }

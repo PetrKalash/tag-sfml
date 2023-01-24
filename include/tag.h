@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <SFML/Graphics.hpp>
 #include <array>
 #include <random>
@@ -15,11 +15,11 @@ private:
 public:
 	Tag();
 
-	// Генерация случайного числа для ячейки на игровом поле
+	// Р“РµРЅРµСЂР°С†РёСЏ СЃР»СѓС‡Р°Р№РЅРѕРіРѕ С‡РёСЃР»Р° РґР»СЏ СЏС‡РµР№РєРё РЅР° РёРіСЂРѕРІРѕРј РїРѕР»Рµ
 	int32_t get_random_number();
-	// Перемешивание ячеек
+	// РџРµСЂРµРјРµС€РёРІР°РЅРёРµ СЏС‡РµРµРє
 	void swap_tiles(int32_t &x_mouse, int32_t &y_mouse, int32_t &dx, int32_t &dy);
-	// Перемещение ячейки
+	// РџРµСЂРµРјРµС‰РµРЅРёРµ СЏС‡РµР№РєРё
 	void new_set_position(sf::RenderWindow &main_window);
 
 	std::array<sf::Sprite, 17> get_sprite_tiles() const;

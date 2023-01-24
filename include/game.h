@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include "tag.h"
@@ -28,24 +28,24 @@ protected:
 	std::stringstream print_time;
 
 private:
-	// Общее время игры
+	// СњР±С‰РµРµ РІСЂРµРјВ¤ РёРіСЂС‹
 	void all_time();
-	// Обработка событий
+	// СњР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№
 	void event_processing();
-	// Изменение программы
+	// В»Р·РјРµРЅРµРЅРёРµ РїСЂРѕРіСЂР°РјРјС‹
 	void tag_game(Mouse mouse_click);
-	// Отрисовка окна
+	// СњС‚СЂРёСЃРѕРІРєР° РѕРєРЅР°
 	void draw_window();
 
-	// Измерение времени в игре
+	// В»Р·РјРµСЂРµРЅРёРµ РІСЂРµРјРµРЅРё РІ РёРіСЂРµ
 	static float m_timer;
 	static float m_minuts;
 
-	// Экземпляр пятнашек
+	// РЃРєР·РµРјРїР»В¤СЂ РїВ¤С‚РЅР°С€РµРє
 	Tag m_tag;
 
 public:
 	Game();
-	// Начало игры
+	// РЊР°С‡Р°Р»Рѕ РёРіСЂС‹
 	void start_game();
 };

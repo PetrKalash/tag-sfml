@@ -1,22 +1,22 @@
-#include "tag.h"
+п»ї#include "tag.h"
 
 Tag::Tag() : m_logic_tiles{}
 {
 	texture_tag.loadFromFile("resources\\img\\tiles.jpg");
 
 	int32_t s{1};
-	// Вырезаем спрайты у текстуры
+	// Р’С‹СЂРµР·Р°РµРј СЃРїСЂР°Р№С‚С‹ Сѓ С‚РµРєСЃС‚СѓСЂС‹
 	for (size_t i{}; i < m_logic_tiles.size() - 2; ++i) {
 		for (size_t j{}; j < m_logic_tiles.size() - 2; ++j) {
-			// Проходимся по всей текстуре и вырезаем игровые ячейки
+			// РџСЂРѕС…РѕРґРёРјСЃСЏ РїРѕ РІСЃРµР№ С‚РµРєСЃС‚СѓСЂРµ Рё РІС‹СЂРµР·Р°РµРј РёРіСЂРѕРІС‹Рµ СЏС‡РµР№РєРё
 			m_sprite_tiles.at(s).setTexture(texture_tag);
 			m_sprite_tiles.at(s).setTextureRect(sf::IntRect(i * 144, j * 144, 144, 144));
-			// У каждого спрайта свой уникальный номер - его индекс на игровом поле
+			// РЈ РєР°Р¶РґРѕРіРѕ СЃРїСЂР°Р№С‚Р° СЃРІРѕР№ СѓРЅРёРєР°Р»СЊРЅС‹Р№ РЅРѕРјРµСЂ - РµРіРѕ РёРЅРґРµРєСЃ РЅР° РёРіСЂРѕРІРѕРј РїРѕР»Рµ
 			m_logic_tiles.at(i + 1).at(j + 1) = s++;
 		}
 	}
 
-	// Перемешиваем сгенерированные ячейки в случайном порядке друг с другом
+	// РџРµСЂРµРјРµС€РёРІР°РµРј СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Рµ СЏС‡РµР№РєРё РІ СЃР»СѓС‡Р°Р№РЅРѕРј РїРѕСЂСЏРґРєРµ РґСЂСѓРі СЃ РґСЂСѓРіРѕРј
 	for (size_t i{}; i < m_logic_tiles.size() - 2; ++i) {
 		for (size_t j{}; j < m_logic_tiles.size() - 2; ++j) {
 			std::swap(m_logic_tiles.at(i + 1).at(j + 1), m_logic_tiles.at(get_random_number()).at(get_random_number()));

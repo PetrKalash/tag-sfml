@@ -1,8 +1,8 @@
-#include "game.h"
+п»ї#include "game.h"
 
 int main(int argc, char *argv[])
 {
-    // Начало игры
+    // РќР°С‡Р°Р»Рѕ РёРіСЂС‹
     Game game;
     game.start_game();
 
